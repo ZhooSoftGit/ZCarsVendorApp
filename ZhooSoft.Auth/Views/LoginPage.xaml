@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ZhooSoft.Auth.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:resource="clr-namespace:ZhooSoft.Auth.Resources.Strings"
+    Title="LoginPage"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Offset="0.0" Color="#4DB6AC" />
+            <!--  Top  -->
+            <GradientStop Offset="0.9" Color="#4DB6AC" />
+            <!--  90% Teal  -->
+            <GradientStop Offset="1.0" Color="White" />
+            <!--  Top: Accent/Teal  -->
+        </LinearGradientBrush>
+    </ContentPage.Background>
+
+    <VerticalStackLayout
+        Padding="10,0"
+        HorizontalOptions="Center"
+        MaximumWidthRequest="400"
+        VerticalOptions="End">
+
+        <ctrl:CustomBorder BackgroundColor="Transparent" Stroke="Transparent">
+            <Image Source="drivericon.png" />
+        </ctrl:CustomBorder>
+
+        <Label
+            FontAttributes="Bold"
+            FontSize="36"
+            HorizontalOptions="Center"
+            Text="ZHOO DRIVE"
+            TextColor="White" />
+
+
+        <ctrl:CustomBorder
+            Padding="30,30,30,50"
+            BackgroundColor="White"
+            Stroke="White"
+            StrokeShape="RoundRectangle 20,20,0,0"
+            VerticalOptions="Fill">
+
+            <Grid RowDefinitions="auto,auto,auto,*" RowSpacing="10">
+                <ctrl:CustomLabel Text="Enter your mobile no" />
+                <!--  Phone Number Container  -->
+                <ctrl:SfEntry
+                    Grid.Row="1"
+                    Margin="0"
+                    CharMaxLength="10"
+                    FocusedStrokeThickness="2"
+                    HeightRequest="80"
+                    Hint="Phone Number"
+                    Keyboard="Telephone"
+                    OutlineCornerRadius="5"
+                    SfText="{Binding PhoneNumber}"
+                    Stroke="LightGray">
+                    <ctrl:SfEntry.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsPhoneValid}"
+                            TargetType="ctrl:SfEntry"
+                            Value="False">
+                            <Setter Property="Stroke" Value="LightGray" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsPhoneValid}"
+                            TargetType="ctrl:SfEntry"
+                            Value="True">
+                            <Setter Property="Stroke" Value="#00796B" />
+                        </DataTrigger>
+                    </ctrl:SfEntry.Triggers>
+                </ctrl:SfEntry>
+
+                <!--  Continue Button  -->
+                <Button
+                    Grid.Row="2"
+                    BackgroundColor="#00796B"
+                    Command="{Binding SendOtpCommand}"
+                    CornerRadius="30"
+                    FontSize="16"
+                    HeightRequest="50"
+                    IsEnabled="{Binding IsPhoneValid}"
+                    Text="Continue"
+                    TextColor="White"
+                    VerticalOptions="End">
+                    <Button.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsPhoneValid}"
+                            TargetType="Button"
+                            Value="False">
+                            <Setter Property="Opacity" Value="0.7" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsPhoneValid}"
+                            TargetType="Button"
+                            Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <ctrl:CustomLabel
+                    Grid.Row="3"
+                    Margin="0,20,0,0"
+                    VerticalOptions="End">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="By Continuing, you agree to the " TextColor="#00796B" />
+                            <Span
+                                Text="T&amp;C"
+                                TextColor="Blue"
+                                TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenLinkCommand}" CommandParameter="https://example.com" />
+                                </Span.GestureRecognizers>
+                            </Span>
+                            <Span Text=" and " TextColor="#00796B" />
+                            <Span
+                                Text="Private Policy"
+                                TextColor="Blue"
+                                TextDecorations="Underline">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenLinkCommand}" CommandParameter="https://example.com" />
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </ctrl:CustomLabel>
+
+            </Grid>
+
+
+        </ctrl:CustomBorder>
+
+
+
+    </VerticalStackLayout>
+</ContentPage>

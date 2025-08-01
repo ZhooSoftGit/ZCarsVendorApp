@@ -1,0 +1,135 @@
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.VehicleListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:Name="VehicleListUI"
+    x:TypeArguments="vm:VehicleListViewModel"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid
+        HorizontalOptions="Fill"
+        RowDefinitions="auto,*"
+        VerticalOptions="Fill">
+
+        <!--  Title  -->
+        <header:CustomNavigationHeader Grid.Row="0" />
+
+        <!--  MainContent  -->
+        <Grid
+            Grid.Row="1"
+            Padding="20"
+            ColumnDefinitions="*"
+            RowDefinitions="Auto, *, Auto">
+
+            <!--  Search Bar  -->
+            <Border
+                Margin="5"
+                Stroke="{DynamicResource Primary}"
+                StrokeShape="RoundRectangle 10">
+                <SearchBar
+                    x:Name="SearchVehicles"
+                    Placeholder="Search Vehicles"
+                    Text="{Binding SearchText, Mode=TwoWay}">
+                    <SearchBar.Behaviors>
+                        <toolkit:EventToCommandBehavior Command="{Binding SearchCommand}" EventName="TextChanged" />
+                    </SearchBar.Behaviors>
+                </SearchBar>
+            </Border>
+
+
+            <!--  Vehicle List  -->
+            <ScrollView Grid.Row="1">
+                <StackLayout BindableLayout.ItemsSource="{Binding FilteredVehicles}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <ctrl:CustomBorder
+                                Margin="5"
+                                Padding="10"
+                                BackgroundColor="White"
+                                BorderColor="LightGray"
+                                CornerRadius="10">
+                                <Grid Padding="5" ColumnDefinitions="Auto, *, Auto">
+
+                                    <!--  Vehicle Image  -->
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        Text="&#xe99c;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+
+                                    <!--  Vehicle Details  -->
+                                    <VerticalStackLayout Grid.Column="1" Padding="10,0,0,0">
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            Text="{Binding VehicleRegistrationNumber}" />
+                                        <Label
+                                            FontSize="14"
+                                            Text="{Binding VehicleModel}"
+                                            TextColor="Gray" />
+                                    </VerticalStackLayout>
+
+                                    <!--  Actions Container  -->
+                                    <HorizontalStackLayout
+                                        Grid.Column="2"
+                                        HorizontalOptions="Fill"
+                                        IsVisible="{Binding ShowRegistrationOption}"
+                                        Spacing="20"
+                                        VerticalOptions="Fill">
+                                        <!--  Edit Button with Image  -->
+                                        <ctrl:CustomFontIcon
+                                            BackgroundColor="{DynamicResource Primary}"
+                                            Command="{Binding Path=BindingContext.EditVehicleCommand, Source={x:Reference VehicleListUI}}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="zappfont"
+                                            FontSize="18"
+                                            Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 20"
+                                            Text="&#xe905;"
+                                            TextColor="{DynamicResource White}" />
+
+
+                                        <!--  Delete Button with Image  -->
+
+                                        <ctrl:CustomFontIcon
+                                            BackgroundColor="{DynamicResource Red}"
+                                            Command="{Binding Path=BindingContext.DeleteVehicleCommand, Source={x:Reference VehicleListUI}}"
+                                            CommandParameter="{Binding .}"
+                                            FontFamily="zappfont"
+                                            FontSize="20"
+                                            Stroke="Transparent"
+                                            StrokeShape="RoundRectangle 20"
+                                            Text="&#xe95d;"
+                                            TextColor="{DynamicResource White}" />
+
+                                    </HorizontalStackLayout>
+                                </Grid>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Path=BindingContext.ViewVehicleCommand, Source={x:Reference VehicleListUI}}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                            </ctrl:CustomBorder>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </ScrollView>
+
+
+            <!--  Add Vehicle Button  -->
+            <Button
+                x:Name="AddVehicleButton"
+                Grid.Row="2"
+                BackgroundColor="{x:StaticResource Primary}"
+                Command="{Binding AddVehicleCommand}"
+                HeightRequest="50"
+                IsVisible="{Binding ShowRegistrationOption}"
+                Text="Add Vehicle"
+                TextColor="White" />
+        </Grid>
+    </Grid>
+</base:BaseContentPage>

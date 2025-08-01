@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    x:Class="ZCarsDriver.Templates.CustomNavigationHeader"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Padding="10"
+    BackgroundColor="{x:StaticResource Primary}"
+    HeightRequest="60"
+    HorizontalOptions="Fill">
+    <Grid
+        Padding="0"
+        ColumnDefinitions="*"
+        ColumnSpacing="20"
+        HorizontalOptions="Fill"
+        VerticalOptions="Center">
+
+        <!--  Back Button  -->
+        <Label
+            Grid.Column="0"
+            Margin="10,0"
+            FontFamily="zappfont"
+            FontSize="24"
+            IsVisible="{Binding ShowBackButton}"
+            Text="&#xe9a9;"
+            TextColor="{DynamicResource White}"
+            VerticalOptions="Center">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding BackCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+
+        <!--  Page Title  -->
+        <Label
+            FontAttributes="Bold"
+            FontSize="20"
+            HorizontalOptions="Center"
+            Text="{Binding PageTitleName}"
+            TextColor="{x:StaticResource White}"
+            VerticalOptions="Center" />
+
+        <!--  Optional Icon  -->
+        <ImageButton
+            BackgroundColor="Transparent"
+            Command="{Binding RightCommand}"
+            HeightRequest="30"
+            IsVisible="{Binding IsRightIconVisible}"
+            Source="{Binding RightIcon}"
+            WidthRequest="30" />
+    </Grid>
+</ContentView>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.VehicleTypeSelectionPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:resource="clr-namespace:ZCarsDriver.Resources.Strings"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:Name="VehicleSelectionUI"
+    Title="VehicleTypeSelectionPage"
+    x:TypeArguments="vm:VehicleTypeSelectionViewModel"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <Grid RowDefinitions="Auto,*">
+            <!--  Header Section  -->
+            <header:CustomNavigationHeader Grid.Row="0" />
+
+            <Grid
+                Grid.Row="1"
+                Padding="20"
+                RowDefinitions="*,auto">
+                <Grid RowDefinitions="auto,*">
+                    <Label
+                        Padding="20"
+                        FontSize="18"
+                        LineBreakMode="WordWrap"
+                        Text="Choose the primary vehicle type you will be driving for your role."
+                        TextColor="Gray" />
+
+                    <CollectionView
+                        Grid.Row="1"
+                        ItemsSource="{Binding VehicleTypes}"
+                        SelectionMode="None">
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2" />
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    Margin="6"
+                                    Padding="16"
+                                    BackgroundColor="#FAFAFA"
+                                    Stroke="LightGray"
+                                    StrokeShape="RoundRectangle 16">
+                                    <StackLayout Spacing="12">
+                                        <Image
+                                            HeightRequest="48"
+                                            HorizontalOptions="Center"
+                                            Source="car_icon.png" />
+                                        <Label
+                                            FontAttributes="Bold"
+                                            FontSize="16"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Name}"
+                                            TextColor="Black" />
+                                        <Label
+                                            FontSize="13"
+                                            HorizontalTextAlignment="Center"
+                                            Text="{Binding Description}"
+                                            TextColor="Gray" />
+                                    </StackLayout>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.VehicleSelectCmd, Source={x:Reference VehicleSelectionUI}}" CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+    </Grid>
+</base:BaseContentPage>

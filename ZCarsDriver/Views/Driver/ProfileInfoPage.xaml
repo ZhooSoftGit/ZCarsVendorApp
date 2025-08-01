@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.ProfileInfoPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:resource="clr-namespace:ZCarsDriver.Resources.Strings"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:TypeArguments="vm:ProfileInfoViewModel"
+    NavigationPage.HasNavigationBar="False">
+    <Grid
+        HorizontalOptions="Fill"
+        RowDefinitions="Auto, *"
+        VerticalOptions="Fill">
+        <!--  Title  -->
+        <header:CustomNavigationHeader Grid.Row="0" />
+
+        <!--  Page Content  -->
+        <Grid
+            Grid.Row="1"
+            Padding="20"
+            HorizontalOptions="Fill"
+            RowDefinitions="*,auto"
+            VerticalOptions="Fill">
+
+            <Grid RowDefinitions="0.3*,*">
+                <Grid
+                    Grid.Row="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+
+                    <!--  Profile Photo  -->
+                    <ctrl:CustomBorder
+                        BackgroundColor="White"
+                        CornerRadius="60"
+                        HeightRequest="150"
+                        Stroke="{DynamicResource Primary}"
+                        StrokeShape="RoundRectangle 75"
+                        StrokeThickness="2"
+                        WidthRequest="150">
+                        <Image
+                            x:Name="ProfileImage"
+                            Aspect="AspectFill"
+                            Source="{Binding ProfilePhoto}" />
+                    </ctrl:CustomBorder>
+
+                    <Border
+                        BackgroundColor="{DynamicResource Primary}"
+                        HorizontalOptions="End"
+                        Stroke="{DynamicResource Primary}"
+                        StrokeShape="RoundRectangle 20"
+                        StrokeThickness="0"
+                        VerticalOptions="End">
+                        <!--  add Photo  -->
+                        <ctrl:CustomFontIcon
+                            BackgroundColor="{DynamicResource Primary}"
+                            Command="{Binding TakePhotoCommand}"
+                            FontFamily="zappfont"
+                            FontSize="20"
+                            HorizontalOptions="Center"
+                            Stroke="Transparent"
+                            StrokeShape="RoundRectangle 20"
+                            Text="&#xe90f;"
+                            TextColor="{StaticResource White}"
+                            VerticalOptions="Start" />
+                    </Border>
+
+
+
+                </Grid>
+
+                <VerticalStackLayout
+                    Grid.Row="1"
+                    Padding="20"
+                    Spacing="10">
+
+                    <!--  Username  -->
+                    <Label Text="Username" />
+                    <Border
+                        Padding="8"
+                        Stroke="Gray"
+                        StrokeShape="RoundRectangle 6"
+                        StrokeThickness="1">
+                        <ctrl:CustomEntry Placeholder="Enter username" Text="{Binding Username}" />
+                    </Border>
+
+                    <!--  Gender  -->
+                    <Label Text="Preferred Language" />
+                    <Border
+                        Padding="6"
+                        Stroke="Gray"
+                        StrokeShape="RoundRectangle 6"
+                        StrokeThickness="1">
+                        <ctrl:CustomPicker ItemsSource="{Binding LanguageOption}" SelectedItem="{Binding SelectedLanguage}" />
+                    </Border>
+
+
+                    <!--  Gender  -->
+                    <Label Text="Gender" />
+                    <Border
+                        Padding="6"
+                        Stroke="Gray"
+                        StrokeShape="RoundRectangle 6"
+                        StrokeThickness="1">
+                        <ctrl:RadioGroup
+                            ItemsSource="{Binding GenderOptions}"
+                            Orientation="Horizontal"
+                            SelectedValue="{Binding SelectedGender}" />
+                    </Border>
+
+
+
+                </VerticalStackLayout>
+            </Grid>
+
+
+            <!--  Save & Continue Button  -->
+            <Button
+                Grid.Row="1"
+                Command="{Binding SaveCommand}"
+                CornerRadius="10"
+                FontSize="18"
+                HeightRequest="50"
+                IsEnabled="{Binding IsEditable}"
+                Style="{StaticResource AppButtonStyle}"
+                Text="{Binding SubmitBtnTxt}"
+                VerticalOptions="End" />
+
+        </Grid>
+    </Grid>
+</base:BaseContentPage>

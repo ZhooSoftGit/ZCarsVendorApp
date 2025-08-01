@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.DocumentUploadPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:TypeArguments="vm:DocumentUploadViewModel"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid
+        HorizontalOptions="Fill"
+        RowDefinitions="Auto, *"
+        VerticalOptions="Fill">
+
+        <!--  Title  -->
+        <header:CustomNavigationHeader Grid.Row="0" />
+
+        <!--  Content  -->
+        <Grid
+            Grid.Row="1"
+            Padding="20"
+            RowDefinitions="*,auto">
+
+            <Grid
+                Grid.Row="0"
+                RowDefinitions="*,*"
+                RowSpacing="20">
+
+
+                <!--  Uploaded File (Front)  -->
+
+                <Border
+                    Grid.Row="0"
+                    Padding="15"
+                    BackgroundColor="White"
+                    Stroke="{x:StaticResource Gray200}"
+                    StrokeShape="RoundRectangle 15"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="*" RowDefinitions="Auto,*,Auto">
+
+                        <Grid ColumnDefinitions="*,*">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                Text="Front Side"
+                                TextColor="Black" />
+
+                            <Border
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Padding="6"
+                                BackgroundColor="#FBF0CE"
+                                StrokeShape="RoundRectangle 6"
+                                StrokeThickness="0">
+                                <Label
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding FrontStatus, Converter={StaticResource ApprovalStatusToTextConverter}}"
+                                    TextColor="#A16207"
+                                    VerticalTextAlignment="Center" />
+                            </Border>
+                        </Grid>
+
+
+                        <Image
+                            Grid.Row="1"
+                            Margin="0,10"
+                            Aspect="Fill"
+                            HeightRequest="150"
+                            Source="{Binding FrontDocImage}" />
+
+                        <Grid
+                            Grid.Row="2"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="10">
+                            <ctrl:CustomFontIconButton
+                                Padding="10"
+                                BackgroundColor="#F7F7F7"
+                                ButtonText="Upload Photo"
+                                ClickCommand="{Binding UploadFrontCommand}"
+                                CommandParameter="Upload"
+                                FontFamily="zappfont"
+                                IconColor="#393939"
+                                IconText="&#xe934;"
+                                StrokeShape="RoundRectangle 8" />
+
+                            <ctrl:CustomFontIconButton
+                                Grid.Column="1"
+                                Padding="10"
+                                ButtonText="Take Photo"
+                                ClickCommand="{Binding UploadFrontCommand}"
+                                CommandParameter="Camera"
+                                FontFamily="zappfont"
+                                IconText="&#xe90f;"
+                                Stroke="#ECECEC"
+                                StrokeShape="RoundRectangle 10" />
+
+                        </Grid>
+                    </Grid>
+                </Border>
+
+
+                <!--  Uploaded File (Back)  -->
+                <Border
+                    Grid.Row="1"
+                    Padding="15"
+                    BackgroundColor="White"
+                    Stroke="{x:StaticResource Gray200}"
+                    StrokeShape="RoundRectangle 15"
+                    StrokeThickness="1">
+                    <Grid ColumnDefinitions="*" RowDefinitions="Auto,*,Auto">
+
+                        <Grid ColumnDefinitions="*,*">
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="18"
+                                Text="Back Side"
+                                TextColor="Black" />
+
+                            <Border
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Padding="6"
+                                BackgroundColor="#FBF0CE"
+                                StrokeShape="RoundRectangle 6"
+                                StrokeThickness="0">
+                                <Label
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{Binding BackStatus, Converter={StaticResource ApprovalStatusToTextConverter}}"
+                                    TextColor="#A16207"
+                                    VerticalTextAlignment="Center" />
+                            </Border>
+                        </Grid>
+
+
+                        <Image
+                            Grid.Row="1"
+                            Margin="0,10"
+                            Aspect="Fill"
+                            Source="{Binding BackDocImage}" />
+
+                        <Grid
+                            Grid.Row="2"
+                            ColumnDefinitions="*,*"
+                            ColumnSpacing="10">
+                            <ctrl:CustomFontIconButton
+                                Padding="10"
+                                BackgroundColor="#F7F7F7"
+                                ButtonText="Upload Photo"
+                                ClickCommand="{Binding UploadBackCommand}"
+                                CommandParameter="Upload"
+                                FontFamily="zappfont"
+                                IconColor="#393939"
+                                IconText="&#xe934;"
+                                StrokeShape="RoundRectangle 8" />
+
+                            <ctrl:CustomFontIconButton
+                                Grid.Column="1"
+                                Padding="10"
+                                ButtonText="Take Photo"
+                                ClickCommand="{Binding UploadBackCommand}"
+                                CommandParameter="Camera"
+                                FontFamily="zappfont"
+                                IconText="&#xe90f;"
+                                Stroke="#ECECEC"
+                                StrokeShape="RoundRectangle 10" />
+
+                        </Grid>
+                    </Grid>
+                </Border>
+
+            </Grid>
+
+            <VerticalStackLayout
+                Grid.Row="1"
+                Margin="0,20,0,0"
+                Spacing="6">
+                <ctrl:CustomLabel
+                    FontSize="18"
+                    Text="{Binding DocumentText}"
+                    TextColor="{DynamicResource Primary}" />
+
+                <Border Padding="10" StrokeShape="RoundRectangle 10">
+                    <ctrl:CustomEntry
+                        Grid.Row="1"
+                        Margin="0"
+                        Placeholder="Document Number"
+                        ReturnType="Done"
+                        Text="{Binding DocumentNo}"
+                        TextChangedCommand="{Binding OnTextChangedCmd}" />
+                </Border>
+
+
+                <ctrl:CustomLabel
+                    Padding="10"
+                    FontSize="14"
+                    Text="Enter the unique identification number of your document."
+                    TextColor="#8C8D8B" />
+
+                <!--  Save Button  -->
+                <Button
+                    Grid.Row="2"
+                    BackgroundColor="{StaticResource Primary}"
+                    Command="{Binding SaveCommand}"
+                    CornerRadius="10"
+                    FontSize="18"
+                    HeightRequest="50"
+                    IsEnabled="{Binding IsSaveEnabled}"
+                    Text="Submit Documents"
+                    TextColor="White"
+                    VerticalOptions="End">
+                    <Button.Triggers>
+                        <DataTrigger
+                            Binding="{Binding IsSaveEnabled}"
+                            TargetType="Button"
+                            Value="False">
+                            <Setter Property="Opacity" Value="0.7" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding IsSaveEnabled}"
+                            TargetType="Button"
+                            Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </VerticalStackLayout>
+
+
+
+
+        </Grid>
+    </Grid>
+</base:BaseContentPage>

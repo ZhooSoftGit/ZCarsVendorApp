@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.HomeViewPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:resource="clr-namespace:ZCarsDriver.Resources.Strings"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:TypeArguments="vm:HomeViewModel"
+    NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <AbsoluteLayout HorizontalOptions="Fill" VerticalOptions="Fill">
+
+            <!--  Home Main View  -->
+            <Grid
+                x:Name="mainLayout"
+                Padding="0"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid
+                    x:Name="headerLayout"
+                    Grid.Row="0"
+                    Margin="0,0,0,0"
+                    Padding="10,15"
+                    Background="{DynamicResource Primary}"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0"
+                        FontFamily="zappfont"
+                        FontSize="30"
+                        HorizontalOptions="Start"
+                        HorizontalTextAlignment="Center"
+                        Text="&#xe96e;"
+                        TextColor="{DynamicResource White}"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped_2" />
+                        </Label.GestureRecognizers>
+                    </Label>
+
+
+                    <Image
+                        Grid.Row="0"
+                        HorizontalOptions="Center"
+                        Source="drivericon.png"
+                        VerticalOptions="Center">
+                        <Image.WidthRequest>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>100</OnIdiom.Phone>
+                                <OnIdiom.Tablet>200</OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Image.WidthRequest>
+                        <Image.HeightRequest>
+                            <OnIdiom x:TypeArguments="x:Double">
+                                <OnIdiom.Phone>30</OnIdiom.Phone>
+                                <OnIdiom.Tablet>50</OnIdiom.Tablet>
+                            </OnIdiom>
+                        </Image.HeightRequest>
+                    </Image>
+
+                </Grid>
+
+                <Grid
+                    Grid.Row="1"
+                    Padding="20"
+                    HorizontalOptions="Fill"
+                    RowDefinitions="auto,*, auto"
+                    RowSpacing="10"
+                    VerticalOptions="Fill">
+
+                    <VerticalStackLayout Grid.Row="0" Spacing="6">
+
+                        <ctrl:CustomLabel
+                            FontAttributes="Bold"
+                            FontSize="24"
+                            Text="Welcome to ZhooDrive!" />
+
+                        <ctrl:CustomLabel
+                            FontSize="16"
+                            Text="Your central hub for all transportation needs."
+                            TextColor="#8E8F8D" />
+
+                        <ctrl:CustomLabel
+                            Margin="0,20,0,0"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="Explore Your Roles" />
+
+                        <ctrl:CustomBorder
+                            Margin="0"
+                            BackgroundColor="#00796B"
+                            BorderColor="{DynamicResource Primary}"
+                            CornerRadius="10"
+                            IsVisible="False"
+                            Stroke="{DynamicResource Primary}">
+                            <Grid
+                                ColumnDefinitions="*, Auto"
+                                HorizontalOptions="Fill"
+                                VerticalOptions="Fill">
+
+                                <Image
+                                    HeightRequest="150"
+                                    Source="banner1.png"
+                                    WidthRequest="200" />
+                            </Grid>
+                        </ctrl:CustomBorder>
+                    </VerticalStackLayout>
+
+
+
+                    <!--  Booking Options  -->
+                    <Grid
+                        Grid.Row="1"
+                        Padding="5"
+                        ColumnDefinitions="*, *"
+                        ColumnSpacing="10"
+                        RowDefinitions="Auto, Auto, Auto, Auto"
+                        RowSpacing="10">
+                        <!--  Driver Register  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe99c;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static resource:AppResources.Driver}"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Drive your own Vehicles"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.Driver}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Vendor Register  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe972;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static resource:AppResources.Vendor}"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Fleet Management"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.Vendor}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Service Provider Register  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe915;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static resource:AppResources.ServiceProvider}"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Car Service and works"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.ServiceProvider}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Acting Driver  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe919;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Acting Driver"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Drive Others Vehicle"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.ActingDriver}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+
+                        <!--  Spar Parts Register  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe917;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static resource:AppResources.SparParts}"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Vehicle Parts SUppliers"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.SparParts}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Buy and Sell  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Border
+                                    BackgroundColor="#E5F4F3"
+                                    HeightRequest="60"
+                                    Stroke="#E5F4F3"
+                                    StrokeShape="RoundRectangle 40"
+                                    WidthRequest="60">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="30"
+                                        HorizontalTextAlignment="Center"
+                                        Text="&#xe929;"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="{x:Static resource:AppResources.BuyAndSell}"
+                                    TextColor="{x:StaticResource Black}" />
+                                <Label
+                                    FontSize="14"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Vehicle Buy and Sell"
+                                    TextColor="#8C8D8B" />
+                            </StackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TileClickCmd}" CommandParameter="{x:Static resource:AppResources.BuyAndSell}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                    </Grid>
+
+                    <!--  QuickActions  -->
+                    <Grid Grid.Row="2" />
+
+                </Grid>
+
+            </Grid>
+
+        </AbsoluteLayout>
+    </ContentPage.Content>
+
+</base:BaseContentPage>

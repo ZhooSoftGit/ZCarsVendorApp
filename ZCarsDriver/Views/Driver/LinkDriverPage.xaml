@@ -1,0 +1,277 @@
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.LinkDriverPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:Name="LinkDriverUI"
+    x:TypeArguments="vm:LinkDriverViewModel"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid
+        HorizontalOptions="Fill"
+        RowDefinitions="auto,*"
+        VerticalOptions="Fill">
+
+        <!--  Title  -->
+        <header:CustomNavigationHeader Grid.Row="0" />
+
+        <AbsoluteLayout Grid.Row="1">
+            <!--  MainContent  -->
+            <Grid
+                Grid.Row="1"
+                Padding="20"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                ColumnDefinitions="*"
+                RowDefinitions="auto,*, auto"
+                RowSpacing="20">
+
+                <Grid
+                    x:Name="LinkedVehicle"
+                    Grid.Row="0"
+                    RowDefinitions="auto,auto, auto"
+                    RowSpacing="6">
+                    <ctrl:CustomLabel
+                        Grid.Row="0"
+                        Padding="10,0,0,10"
+                        Text="Enter your vendor Mobile Number" />
+                    <!--  Phone Number Container  -->
+                    <Grid Grid.Row="1" ColumnDefinitions="*,auto">
+                        <ctrl:SfEntry
+                            Margin="0"
+                            CharMaxLength="10"
+                            FocusedStrokeThickness="2"
+                            HeightRequest="80"
+                            Hint="Phone Number"
+                            Keyboard="Telephone"
+                            OutlineCornerRadius="5"
+                            SfText="{Binding VendorNumber}"
+                            Stroke="{DynamicResource Primary}">
+
+                            <ctrl:SfEntry.ClearIconView>
+                                <Label
+                                    Padding="0"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    HorizontalOptions="End"
+                                    Text="&#xe96d;"
+                                    TextColor="Gray"
+                                    VerticalOptions="Center" />
+                            </ctrl:SfEntry.ClearIconView>
+                        </ctrl:SfEntry>
+                        <Button
+                            Grid.Column="1"
+                            Margin="10"
+                            BackgroundColor="{DynamicResource Primary}"
+                            Command="{Binding OnSearchCabsCmd}"
+                            CornerRadius="10"
+                            HeightRequest="50"
+                            Text="Search"
+                            TextColor="{DynamicResource White}"
+                            VerticalOptions="Start"
+                            WidthRequest="80" />
+                    </Grid>
+                    <ctrl:CustomLabel Grid.Row="2" Text="Search your vendor Vehicle by mobile number" />
+                </Grid>
+
+
+                <Grid
+                    Grid.Row="1"
+                    IsVisible="{Binding ShowSearchResult}"
+                    RowDefinitions="auto,auto,*,auto,auto,auto">
+                    <!--  Search Bar  -->
+                    <StackLayout Spacing="6">
+                        <Label Text="Vendor Vehicles" />
+                        <Border Grid.Row="0" Padding="0">
+                            <SearchBar
+                                x:Name="SearchCabs"
+                                Placeholder="Search"
+                                Text="{Binding SearchText, Mode=TwoWay}">
+                                <SearchBar.Behaviors>
+                                    <toolkit:EventToCommandBehavior Command="{Binding SearchCommand}" EventName="TextChanged" />
+                                </SearchBar.Behaviors>
+                            </SearchBar>
+                        </Border>
+
+
+                    </StackLayout>
+
+
+                    <!--  Label for Available Cabs  -->
+                    <Label
+                        Grid.Row="1"
+                        Margin="5,10,0,5"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        Text="AVAILABLE CABS"
+                        TextColor="Gray" />
+
+                    <!--  Available Cabs List  -->
+
+                    <ScrollView
+                        Grid.Row="2"
+                        HorizontalScrollBarVisibility="Never"
+                        VerticalScrollBarVisibility="Never">
+                        <StackLayout BindableLayout.ItemsSource="{Binding FilteredCabs}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <ctrl:CustomBorder
+                                        Margin="5"
+                                        Padding="10"
+                                        BackgroundColor="White"
+                                        BorderColor="LightGray"
+                                        CornerRadius="10">
+                                        <Grid Padding="5" ColumnDefinitions="Auto, *, Auto">
+
+                                            <!--  Car Image  -->
+                                            <Image
+                                                Grid.Column="0"
+                                                HeightRequest="40"
+                                                Source="car_icon.png"
+                                                VerticalOptions="Center"
+                                                WidthRequest="40" />
+
+                                            <!--  Cab Details  -->
+
+                                            <VerticalStackLayout Grid.Column="1" Padding="10,0,0,0">
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    FontSize="16"
+                                                    Text="{Binding VehicleRegistrationNumber}" />
+                                                <Label
+                                                    FontSize="14"
+                                                    Text="{Binding VehicleModel}"
+                                                    TextColor="Gray" />
+                                            </VerticalStackLayout>
+
+                                            <!--  Selection Radio Button  -->
+                                            <RadioButton
+                                                Grid.Column="2"
+                                                GroupName="CabSelection"
+                                                IsChecked="{Binding IsSelected}" />
+                                        </Grid>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Path=BindingContext.SelectCabCommand, Source={x:Reference LinkDriverUI}}" CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                    </ctrl:CustomBorder>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                            <BindableLayout.EmptyView>
+                                <ctrl:CustomLabel Text="No Vehicles found for Vendor" />
+                            </BindableLayout.EmptyView>
+                        </StackLayout>
+                    </ScrollView>
+
+                </Grid>
+
+                <!--  Continue Button  -->
+                <Button
+                    x:Name="ContinueButton"
+                    Grid.Row="2"
+                    BackgroundColor="{x:StaticResource Primary}"
+                    Command="{Binding ContinueCommand}"
+                    HeightRequest="50"
+                    IsEnabled="{Binding CanContinue}"
+                    Text="Continue"
+                    TextColor="White">
+                    <Button.Triggers>
+                        <DataTrigger
+                            Binding="{Binding CanContinue}"
+                            TargetType="Button"
+                            Value="False">
+                            <Setter Property="Opacity" Value="0.7" />
+                        </DataTrigger>
+                        <DataTrigger
+                            Binding="{Binding CanContinue}"
+                            TargetType="Button"
+                            Value="True">
+                            <Setter Property="Opacity" Value="1" />
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+            </Grid>
+
+            <Border
+                x:Name="TransparentLayer"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="{DynamicResource Gray600}"
+                InputTransparent="True"
+                IsVisible="{Binding ShowOTP}"
+                Opacity="0.7"
+                Stroke="Transparent"
+                StrokeThickness="0" />
+
+            <ctrl:CustomBorder
+                Padding="30,20,20,50"
+                AbsoluteLayout.LayoutBounds="1,1,1,0.5"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="White"
+                IsVisible="{Binding ShowOTP}"
+                Stroke="Transparent"
+                StrokeShape="RoundRectangle 20,20,0,0"
+                VerticalOptions="End">
+
+                <Grid RowDefinitions="auto,*">
+
+                    <Label
+                        Padding="0"
+                        FontFamily="zappfont"
+                        FontSize="28"
+                        HorizontalOptions="End"
+                        Text="&#xe96d;"
+                        TextColor="Gray"
+                        VerticalOptions="Start">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OnCloseOTPCmd}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Grid
+                        Grid.Row="1"
+                        RowDefinitions="auto,auto,auto"
+                        RowSpacing="20">
+
+                        <ctrl:CustomLabel FontSize="16" Text="OTP sent to vendor. Please check and continue." />
+                        <!--  Vendor OTP  -->
+
+                        <ctrl:CustomOTPEntryView
+                            Grid.Row="1"
+                            OtpCode="{Binding EnteredOtp}"
+                            OtpCompletedCommand="{Binding SubmitOtpCommand}" />
+
+                        <!--  confirm Button  -->
+                        <Button
+                            Grid.Row="2"
+                            BackgroundColor="#00796B"
+                            Command="{Binding SubmitOtpCommand}"
+                            CornerRadius="30"
+                            FontSize="16"
+                            HeightRequest="50"
+                            Text="Confirm"
+                            TextColor="White"
+                            VerticalOptions="End" />
+
+                    </Grid>
+                </Grid>
+
+
+
+
+            </ctrl:CustomBorder>
+        </AbsoluteLayout>
+
+
+
+
+
+    </Grid>
+
+
+
+</base:BaseContentPage>

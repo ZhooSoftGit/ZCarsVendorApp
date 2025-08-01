@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.BaseProfilePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:ctrl="clr-namespace:ZhooSoft.Controls;assembly=ZhooSoft.Controls"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:resource="clr-namespace:ZCarsDriver.Resources.Strings"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:TypeArguments="vm:BaseProfileViewModel"
+    BackgroundColor="White"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+
+        <Grid RowDefinitions="Auto,*,Auto">
+            <!--  Header Section  -->
+            <header:CustomNavigationHeader Grid.Row="0" />
+
+            <!--  Main Content Section  -->
+            <ScrollView
+                Grid.Row="1"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill">
+                <Grid RowDefinitions="200,*" RowSpacing="20">
+
+                    <Border
+                        Grid.Row="0"
+                        Margin="20,10"
+                        Padding="0"
+                        HorizontalOptions="Fill"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="2"
+                        VerticalOptions="Fill">
+                        <ctrl:CustomImage
+                            Aspect="Fill"
+                            HorizontalOptions="Fill"
+                            Source="{Binding BannerImg}"
+                            VerticalOptions="Fill" />
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0.0" Color="#26A69A" />
+                                <!--  Indigo Top  -->
+                                <GradientStop Offset="1.0" Color="#26A69A" />
+                                <!--  Lighter Teal Bottom  -->
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Grid
+                        Grid.Row="1"
+                        Padding="20,0,20,20"
+                        RowDefinitions="auto,auto,auto,auto,auto"
+                        RowSpacing="20">
+                        <!--  Profile Section  -->
+                        <ctrl:CustomBorder
+                            Margin="5"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <Grid
+                                ColumnDefinitions="Auto,*, Auto, Auto"
+                                ColumnSpacing="10"
+                                RowDefinitions="auto,auto">
+
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="12"
+                                    BackgroundColor="#F7F7F7"
+                                    StrokeShape="RoundRectangle 999"
+                                    StrokeThickness="0">
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="24"
+                                        Text="{Binding ProfileCheckList.IconName}"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontSize="18"
+                                    Text="{Binding ProfileCheckList.ItemName}"
+                                    VerticalOptions="Center" />
+
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Padding="10,0"
+                                    BackgroundColor="{Binding ProfileCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToBGColorConverter}}"
+                                    StrokeShape="RoundRectangle 6">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{Binding ProfileCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToTextConverter}}"
+                                        TextColor="{DynamicResource Black}"
+                                        VerticalTextAlignment="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="3"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    Text="&#xe9b1;"
+                                    TextColor="{DynamicResource Gray300}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CheckListCmd}" CommandParameter="{Binding ProfileCheckList}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Aadhar Doc  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="1"
+                            Margin="5"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <Grid
+                                ColumnDefinitions="Auto,*, Auto, Auto"
+                                ColumnSpacing="10"
+                                RowDefinitions="auto,auto">
+
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="12"
+                                    BackgroundColor="#F7F7F7"
+                                    StrokeShape="RoundRectangle 999"
+                                    StrokeThickness="0">
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="24"
+                                        Text="{Binding AadharCheckList.IconName}"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontSize="18"
+                                    Text="{Binding AadharCheckList.ItemName}"
+                                    VerticalOptions="Center" />
+
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Padding="10,0"
+                                    BackgroundColor="{Binding AadharCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToBGColorConverter}}"
+                                    StrokeShape="RoundRectangle 6">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{Binding AadharCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToTextConverter}}"
+                                        TextColor="{DynamicResource Black}"
+                                        VerticalTextAlignment="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="3"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    Text="&#xe9b1;"
+                                    TextColor="{DynamicResource Gray300}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CheckListCmd}" CommandParameter="{Binding AadharCheckList}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Company Reg Doc  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="2"
+                            Margin="5"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            Stroke="#EBEBEA">
+                            <Grid
+                                ColumnDefinitions="Auto,*, Auto, Auto"
+                                ColumnSpacing="10"
+                                RowDefinitions="auto,auto">
+
+                                <Border
+                                    Grid.RowSpan="2"
+                                    Grid.Column="0"
+                                    Padding="12"
+                                    BackgroundColor="#F7F7F7"
+                                    StrokeShape="RoundRectangle 999"
+                                    StrokeThickness="0">
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="24"
+                                        Text="{Binding CompanyCheckList.IconName}"
+                                        TextColor="{DynamicResource Primary}"
+                                        VerticalOptions="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="2"
+                                    FontSize="18"
+                                    Text="{Binding CompanyCheckList.ItemName}"
+                                    VerticalOptions="Center" />
+
+                                <Border
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Padding="10,0"
+                                    BackgroundColor="{Binding CompanyCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToBGColorConverter}}"
+                                    StrokeShape="RoundRectangle 6">
+                                    <Label
+                                        FontSize="18"
+                                        Text="{Binding CompanyCheckList.ApprovalStatus, Converter={StaticResource ApprovalStatusToTextConverter}}"
+                                        TextColor="{DynamicResource Black}"
+                                        VerticalTextAlignment="Center" />
+                                </Border>
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="3"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    Text="&#xe9b1;"
+                                    TextColor="{DynamicResource Gray300}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CheckListCmd}" CommandParameter="{Binding CompanyCheckList}" />
+                            </Border.GestureRecognizers>
+                        </ctrl:CustomBorder>
+
+                        <!--  Vehicles Section  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="3"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            IsVisible="{Binding IsVendor}"
+                            Stroke="#EBEBEA">
+                            <ctrl:CustomBorder.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding VehiclesCommand}" />
+                            </ctrl:CustomBorder.GestureRecognizers>
+                            <Grid
+                                ColumnDefinitions="*,auto"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="10">
+                                <HorizontalStackLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Spacing="10">
+
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="24"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="&#xe99c;"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="Vehicles" />
+
+                                    <Label
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding DashBoardStatus}"
+                                        TextColor="Green"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    FontSize="12"
+                                    Text="Vendor vechicle details"
+                                    TextColor="Red" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    Text="&#xe9b1;"
+                                    TextColor="{DynamicResource Primary}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </ctrl:CustomBorder>
+
+                        <!--  Onboarding Section  -->
+                        <ctrl:CustomBorder
+                            Grid.Row="4"
+                            Padding="10"
+                            BackgroundColor="White"
+                            CornerRadius="10"
+                            IsEnabled="{Binding EnableDashBoard}"
+                            Stroke="{DynamicResource Primary}">
+                            <ctrl:CustomBorder.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LaunchDashBoardCommand}" />
+                            </ctrl:CustomBorder.GestureRecognizers>
+                            <Grid
+                                ColumnDefinitions="*,auto"
+                                RowDefinitions="auto,auto"
+                                RowSpacing="10">
+                                <HorizontalStackLayout
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Spacing="10">
+                                    <Label
+                                        FontFamily="zappfont"
+                                        FontSize="24"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        Text="&#xe9a5;"
+                                        TextColor="{StaticResource Primary}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        FontAttributes="Bold"
+                                        FontSize="16"
+                                        Text="Launch DashBoard" />
+
+                                    <Label
+                                        FontSize="14"
+                                        HorizontalOptions="Start"
+                                        Text="{Binding DashBoardStatus}"
+                                        TextColor="Green"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    FontSize="12"
+                                    Text="Will be enabled after the registration"
+                                    TextColor="{x:StaticResource Primary}" />
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="1"
+                                    FontFamily="zappfont"
+                                    FontSize="24"
+                                    Text="&#xe9b1;"
+                                    TextColor="{DynamicResource Primary}"
+                                    VerticalOptions="Center" />
+                            </Grid>
+
+                            <ctrl:CustomBorder.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding EnableDashBoard}"
+                                    TargetType="ctrl:CustomBorder"
+                                    Value="False">
+                                    <Setter Property="BackgroundColor" Value="Gray" />
+                                    <Setter Property="Opacity" Value="0.7" />
+                                </DataTrigger>
+                            </ctrl:CustomBorder.Triggers>
+
+                        </ctrl:CustomBorder>
+
+                    </Grid>
+                </Grid>
+
+            </ScrollView>
+
+
+            <!--  Footer Buttons  -->
+            <Grid
+                Grid.Row="2"
+                Margin="10,20"
+                ColumnDefinitions="*,*"
+                ColumnSpacing="20"
+                IsVisible="False">
+                <Button
+                    BackgroundColor="White"
+                    BorderColor="{x:StaticResource Primary}"
+                    BorderWidth="1"
+                    Command="{Binding ContactSupportCommand}"
+                    CornerRadius="10"
+                    Text="Contact Support"
+                    TextColor="{x:StaticResource Primary}" />
+                <Button
+                    Grid.Column="1"
+                    BackgroundColor="{x:StaticResource Primary}"
+                    Command="{Binding LogoutCommand}"
+                    CornerRadius="10"
+                    Text="Logout"
+                    TextColor="White" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+</base:BaseContentPage>

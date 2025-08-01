@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<base:BaseContentPage
+    x:Class="ZCarsDriver.Views.Driver.DriverLinkDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:ZhooSoft.Core;assembly=ZhooSoft.Core"
+    xmlns:header="clr-namespace:ZCarsDriver.Templates"
+    xmlns:vm="clr-namespace:ZCarsDriver.ViewModel"
+    x:TypeArguments="vm:DriverLinkDetailsViewModel"
+    NavigationPage.HasNavigationBar="False">
+    <Grid
+        HorizontalOptions="Fill"
+        RowDefinitions="auto,*"
+        VerticalOptions="Fill">
+
+        <!--  Title  -->
+        <header:CustomNavigationHeader Grid.Row="0" />
+        <ScrollView Grid.Row="1">
+            <Grid Padding="20" RowSpacing="24">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  1. User has linked vehicle  -->
+                <Grid Grid.Row="0" IsVisible="{Binding ShowLinkedSection}">
+                    <Grid RowSpacing="10">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="Your Linked Vehicle" />
+                        <Border Padding="12" Stroke="Gray">
+                            <Label FontSize="16" Text="{Binding LinkedVehicleInfo}" />
+                        </Border>
+
+                        <Label
+                            FontSize="14"
+                            Text="You can also link a vendor vehicle if you drive for someone else."
+                            TextColor="Gray" />
+
+                        <Button Command="{Binding LinkViaVendorCommand}" Text="Link via Vendor Vehicle" />
+
+                        <!--  Optional: allow switching to own vehicle if applicable  -->
+                        <Button
+                            Command="{Binding LinkOwnVehicleCommand}"
+                            IsVisible="{Binding UserHasOwnVehicles}"
+                            Text="Use Your Own Vehicle Instead" />
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="1" IsVisible="{Binding HasPendingVehicle}">
+                    <Grid RowSpacing="6">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Your New Vehicle (Pending Approval)" />
+                        <Border Padding="10" Stroke="Orange">
+                            <Label FontSize="14" Text="{Binding PendingVehicleInfo}" />
+                        </Border>
+                        <Label
+                            FontSize="12"
+                            Text="Your vehicle is under review. We’ll notify you once approved."
+                            TextColor="Gray" />
+                    </Grid>
+                </Grid>
+
+                <!--  2. User has no link but owns vehicles  -->
+                <Grid Grid.Row="1" IsVisible="{Binding ShowChooseSection}">
+                    <Grid RowSpacing="10">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="Choose a Vehicle to Drive" />
+
+                        <Label
+                            FontSize="14"
+                            Text="You own multiple vehicles. Choose one to drive, or link a vehicle from a vendor."
+                            TextColor="Gray" />
+
+                        <Button Command="{Binding LinkOwnVehicleCommand}" Text="Use Your Own Vehicle" />
+
+                        <Button Command="{Binding LinkViaVendorCommand}" Text="Link via Vendor Vehicle" />
+                    </Grid>
+                </Grid>
+
+                <!--  3. New user – no link and no own vehicle  -->
+                <Grid Grid.Row="2" IsVisible="{Binding ShowNewUserSection}">
+                    <Grid RowSpacing="10">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="18"
+                            Text="How do you want to link your vehicle?" />
+
+                        <Button Command="{Binding LinkOwnVehicleCommand}" Text="Register Your Own Vehicle" />
+
+                        <Button Command="{Binding LinkViaVendorCommand}" Text="Link via Vendor Vehicle" />
+
+                        <Label
+                            FontSize="14"
+                            Text="You can either link a vehicle you own, or request access to a vendor's vehicle."
+                            TextColor="Gray" />
+                    </Grid>
+                </Grid>
+
+                <!--  2. Pending Vehicle (newly added by user)  -->
+                <Grid Grid.Row="4" IsVisible="{Binding HasPendingVehicle}">
+                    <Grid RowSpacing="6">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            Text="Your New Vehicle (Pending Approval)" />
+                        <Border Padding="10" Stroke="Orange">
+                            <Label FontSize="14" Text="{Binding PendingVehicleInfo}" />
+                        </Border>
+                        <Label
+                            FontSize="12"
+                            Text="Your vehicle is under review. We’ll notify you once approved."
+                            TextColor="Gray" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollView>
+    </Grid>
+</base:BaseContentPage>
